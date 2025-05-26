@@ -17,7 +17,7 @@ void	*ft_calloc(size_t n, size_t size)
 {
 	void	*new;
 
-	if (size && n > MAX_SIZE_T / size)
+	if (size && n > (size_t)-1 / size)
 		return (NULL);
 	new = malloc(n * size);
 	if (!new)
