@@ -1,5 +1,8 @@
 # test framework for libft
 /test
+*.o
+*.a
+*.txt
 
 .clang-format
 
