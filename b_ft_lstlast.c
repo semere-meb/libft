@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smebraht <smebraht@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 14:50:48 by smebraht          #+#    #+#             */
-/*   Updated: 2025/05/21 15:46:34 by smebraht         ###   ########.fr       */
+/*   Created: 2025/05/26 20:08:45 by smebraht          #+#    #+#             */
+/*   Updated: 2025/05/26 20:11:59 by smebraht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+/**
+ * @brief Returns the last element of the list.
+ *
+ * @param lst The beginning of the list.
+ * @return Last element of the list.
+ */
+t_list	*ft_lstlast(t_list *lst)
 {
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)s;
-	while (n--)
-		ptr[n] = '\0';
+	while (lst)
+		lst = lst->next;
+	return (lst);
 }

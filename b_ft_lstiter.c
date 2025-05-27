@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   bonus_ft_lstiter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smebraht <smebraht@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/21 14:50:48 by smebraht          #+#    #+#             */
-/*   Updated: 2025/05/21 15:46:34 by smebraht         ###   ########.fr       */
+/*   Created: 2025/05/26 21:38:38 by smebraht          #+#    #+#             */
+/*   Updated: 2025/05/26 21:45:44 by smebraht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+/**
+ * @brief Iterates the list ’lst’ and applies the function ’f’ to the content of
+ * each element.
+ *
+ * @param lst The adress of a pointer to an element.
+ * @param f The adress of the function used to iterate on the list.
+ */
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)s;
-	while (n--)
-		ptr[n] = '\0';
+	while (lst)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
 }

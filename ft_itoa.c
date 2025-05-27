@@ -10,20 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 
-char	*create_str(char *chars, size_t i)
+char	*create_str(char *chars, size_t start, size_t buffer_size)
 {
 	size_t	index;
 	char	*new;
 
 	index = 0;
-	new = malloc(10 - i + 1);
+	new = malloc(buffer_size - start + 1);
 	if (!new)
 		return (NULL);
-	while (i < 10)
-		new[index++] = chars[i++];
+	while (start < buffer_size)
+		new[index++] = chars[start++];
 	new[index] = '\0';
 	return (new);
 }
@@ -38,14 +37,14 @@ char	*create_str(char *chars, size_t i)
 char	*ft_itoa(int n)
 {
 	long	nb;
-	char	chars[10];
+	char	chars[11];
 	size_t	i;
 	int		is_negative;
 
 	nb = (long)n;
 	i = 0;
 	is_negative = 0;
-	while (i < 10)
+	while (i < 11)
 		chars[i++] = '\0';
 	if (!nb)
 		chars[--i] = '0';
@@ -61,5 +60,5 @@ char	*ft_itoa(int n)
 	}
 	if (is_negative)
 		chars[--i] = '-';
-	return (create_str(chars, i));
+	return (create_str(chars, i, 11));
 }

@@ -6,7 +6,7 @@
 /*   By: smebraht <smebraht@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:02:58 by smebraht          #+#    #+#             */
-/*   Updated: 2025/05/24 21:39:39 by smebraht         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:16:19 by smebraht         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ static char	*allocate_string(char const *s, int start, int end)
 	return (new);
 }
 
-static void	free_array(char **array, size_t count)
+static int	free_array(char **array, size_t count)
 {
-	for (size_t i = 0; i < count; i++)
-	{
-		free(array[i]);
-	}
-	free(array);
+	size_t	i;
+
+	i = 0;
+	while (i < count)
+		free(array[i++]);
+	return (-1);
 }
 
 static int	allocate_array(char **array, char const *s, char c)
@@ -94,10 +95,7 @@ static int	allocate_array(char **array, char const *s, char c)
 		{
 			array[index] = allocate_string(s, start, i);
 			if (!array[index])
-			{
-				free_array(array, index);
-				return (-1);
-			}
+				return (free_array(array, index));
 			index++;
 			start = i;
 		}

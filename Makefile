@@ -3,8 +3,10 @@ CFLAGS = -Wall -Wextra -Werror
 DEBUG_FLAGS = -g
 
 HEADER = libft.h
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard ft_*.c)
 OBJS = $(SRCS:.c=.o)
+BONUS_SRCS = $(wildcard b_ft_*.c)
+BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 LIB = libft.a
 
@@ -17,9 +19,12 @@ $(LIB): $(OBJS)
 	$(CC) $(CFLAGS) -I. -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(BONUS_OBJS)
 
-fclean: clean clean_tests
-	rm -f $(LIB) $(TEST)
+fclean: clean
+	rm -f $(LIB)
 
-re: fclean all
+bonus: $(LIB) $(BONUS_OBJS)
+	ar rcs $(LIB) $(BONUS_OBJS)
+
+re: all clean fclean bonus
