@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: semebrah <semebrah@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 15:01:03 by semebrah          #+#    #+#             */
+/*   Created: 2025/12/04 15:01:00 by semebrah          #+#    #+#             */
 /*   Updated: 2025/12/20 21:36:20 by semebrah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-ssize_t	get_index(const char *s, char c, size_t size)
+static ssize_t	get_index(const char *s, char c, size_t size)
 {
 	size_t	i;
 
@@ -28,7 +28,7 @@ ssize_t	get_index(const char *s, char c, size_t size)
 	return (-1);
 }
 
-void	shift_remainder(char *buff, size_t start, size_t size)
+static void	shift_remainder(char *buff, size_t start, size_t size)
 {
 	ssize_t	i;
 
@@ -38,7 +38,7 @@ void	shift_remainder(char *buff, size_t start, size_t size)
 	ft_memset(&buff[i], 0, size - i);
 }
 
-char	*append_buff(char *s1, char *s2, size_t size)
+static char	*append_buff(char *s1, char *s2, size_t size)
 {
 	ssize_t	i;
 	size_t	s1_len;
@@ -62,4 +62,31 @@ char	*append_buff(char *s1, char *s2, size_t size)
 	if (!ft_strlen(new))
 		return (free(new), NULL);
 	return (new);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	buff[FD_SETSIZE][BUFFER_SIZE];
+	int			ix;
+	ssize_t		readbytes;
+	char		*temp;
+
+	temp = NULL;
+	while (1)
+	{
+		ix = get_index(buff[fd], '\n', BUFFER_SIZE);
+		if (ix > -1)
+		{
+			temp = append_buff(temp, buff[fd], ix + 1);
+			shift_remainder(buff[fd], ix + 1, BUFFER_SIZE);
+			return (temp);
+		}
+		temp = append_buff(temp, buff[fd], BUFFER_SIZE);
+		ft_memset(buff[fd], 0, BUFFER_SIZE);
+		readbytes = read(fd, buff[fd], BUFFER_SIZE);
+		if (readbytes == 0)
+			return (temp);
+		if (readbytes < 0)
+			return (NULL);
+	}
 }
